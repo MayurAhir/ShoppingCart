@@ -11,7 +11,12 @@ namespace WebApplication5.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["username"] != null && Session["u_id"] != null)
+            {
+               
+            }
         }
+
+       
     }
 }

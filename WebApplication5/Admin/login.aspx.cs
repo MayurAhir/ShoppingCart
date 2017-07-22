@@ -16,7 +16,8 @@ namespace WebApplication5.Admin
         ShopingEntities db = new ShopingEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+          
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -41,6 +42,7 @@ namespace WebApplication5.Admin
 
                     Session["username"] = m.username;
                     Session["u_id"] = m.a_id;
+                  
                     Response.Redirect("order.aspx");
                 }
                 else
@@ -55,6 +57,7 @@ namespace WebApplication5.Admin
 
 
         }
+       
     }
 
 }

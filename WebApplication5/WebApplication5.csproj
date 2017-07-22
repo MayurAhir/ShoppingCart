@@ -204,6 +204,7 @@
     <Content Include="Admin\jquery-1.10.2.js" />
     <Content Include="Admin\jquery-ui-1.10.4.custom.js" />
     <Content Include="Admin\login.aspx" />
+    <Content Include="Admin\logout.aspx" />
     <Content Include="Admin\manageorder.aspx" />
     <Content Include="Admin\manageproduct.aspx" />
     <Content Include="Admin\order.aspx" />
@@ -464,6 +465,13 @@
     </Compile>
     <Compile Include="Admin\login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\logout.aspx.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\logout.aspx.designer.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\manageorder.aspx.cs">
       <DependentUpon>manageorder.aspx</DependentUpon>

@@ -46,10 +46,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
+                            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="LogIn" />
                             <asp:Label ID="Label1" runat="server"></asp:Label>
+                            
                         </div>
                     </div>
+
                 </div>
                 <p>
                     <asp:HyperLink runat="server" NavigateUrl="~/Admin/Register.aspx" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink><br>
