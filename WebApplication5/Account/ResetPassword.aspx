@@ -7,9 +7,7 @@
     </p>
 
     <div class="form-horizontal">
-        <h4>Enter your new password</h4>
-        <hr />
-        <asp:ValidationSummary runat="server" CssClass="text-danger" />
+       
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
             <div class="col-md-10">
@@ -27,18 +25,18 @@
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Confirm password</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">New Password</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
-                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
+                <asp:TextBox runat="server" ID="newpass" TextMode="Password" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="newpass"
+                    CssClass="text-danger" ErrorMessage="The password field is required." />
             </div>
         </div>
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <asp:Button runat="server" OnClick="Reset_Click" Text="Reset" CssClass="btn btn-default" />
+            <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
             </div>
         </div>
     </div>

@@ -69,12 +69,23 @@ namespace WebApplication5
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(Session["username"]!=null && Session["u_id"]!=null)
+            {
+                Button1.Visible = true;
+            }
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Session["username"] = null;
+            Session["u_id"] = null;
+            Response.Redirect("~/Default.aspx");
+
         }
     }
 

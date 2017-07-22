@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using WebApplication5.Models;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace WebApplication5.Account
 {
@@ -19,28 +21,22 @@ namespace WebApplication5.Account
 
         protected void Reset_Click(object sender, EventArgs e)
         {
-            string code = IdentityHelper.GetCodeFromRequest(Request);
-            if (code != null)
+            ShopingEntities db = new ShopingEntities();
+            var m = db.UserMsts.Where(c => c.email == Email.Text && c.password == Password.Text);
+            if (m.Any())
             {
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                UserMst a = new UserMst();
+                a=db.UserMsts.Single(c => c.email == Email.Text && c.password == Password.Text);
+                a.password = newpass.Text;
+                db.SaveChanges();
+                Response.Redirect("~/Default.aspx");
 
-                var user = manager.FindByName(Email.Text);
-                if (user == null)
-                {
-                    ErrorMessage.Text = "No user found";
-                    return;
-                }
-                var result = manager.ResetPassword(user.Id, code, Password.Text);
-                if (result.Succeeded)
-                {
-                    Response.Redirect("~/Account/ResetPasswordConfirmation");
-                    return;
-                }
-                ErrorMessage.Text = result.Errors.FirstOrDefault();
-                return;
+
             }
-
-            ErrorMessage.Text = "An error has occurred";
+            else
+            {
+                Label1.Text = "Your username or password is not match";
+            }
         }
     }
 }

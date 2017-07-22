@@ -2,6 +2,10 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
-    <h3>Your application description page.</h3>
-    <p>Use this area to provide additional information.</p>
+    <h1>Lambton College.</h1>
+    <h2>Akshesh Patel</h2>
+    <h2>Davindar Singh</h2>
+    <h2>Mayur Ahir</h2>
+    <h2>Parmit Singh</h2>
+
 </asp:Content>

@@ -1,0 +1,707 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ShopingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminMst">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="subject" Type="nvarchar" MaxLength="50" />
+          <Property Name="message" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Order_Mst">
+          <Key>
+            <PropertyRef Name="o_id" />
+          </Key>
+          <Property Name="o_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_id" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="p_id" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="qty" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="total" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="isprocessed" Type="bit" Nullable="false" />
+          <Property Name="o_date" Type="date" />
+          <Property Name="contact" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="place" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_name" Type="varchar" MaxLength="50" />
+          <Property Name="image" Type="nvarchar" MaxLength="50" />
+          <Property Name="qty" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="price" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="discount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="isdiscount" Type="bit" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="isdelete" Type="bit" />
+          <Property Name="isnew" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserMst">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="dob" Type="date" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="isdelete" Type="bit" />
+          <Property Name="conatcat" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="p_id_foreingkey">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Order_Mst" Type="Self.Order_Mst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="Order_Mst">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="u_id_foreingkey">
+          <End Role="UserMst" Type="Self.UserMst" Multiplicity="0..1" />
+          <End Role="Order_Mst" Type="Self.Order_Mst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMst">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="Order_Mst">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="allproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="contact_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="discount_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="history_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="u_id" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="insert_contact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="phn" Type="numeric" Mode="In" />
+          <Parameter Name="sub" Type="nvarchar" Mode="In" />
+          <Parameter Name="meg" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="insert_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_nm" Type="nvarchar" Mode="In" />
+          <Parameter Name="img" Type="nvarchar" Mode="In" />
+          <Parameter Name="qt" Type="numeric" Mode="In" />
+          <Parameter Name="prc" Type="numeric" Mode="In" />
+          <Parameter Name="disc" Type="numeric" Mode="In" />
+          <Parameter Name="isdis" Type="bit" Mode="In" />
+          <Parameter Name="isactv" Type="bit" Mode="In" />
+          <Parameter Name="isdelt" Type="bit" Mode="In" />
+          <Parameter Name="isnew" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="insertProduct_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="u_id" Type="numeric" Mode="In" />
+          <Parameter Name="p_id" Type="numeric" Mode="In" />
+          <Parameter Name="qty" Type="numeric" Mode="In" />
+          <Parameter Name="total" Type="numeric" Mode="In" />
+          <Parameter Name="contact" Type="numeric" Mode="In" />
+          <Parameter Name="plce" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="itemselected_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pr_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="manage_order_" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oid" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="newproduct_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="order_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="u_id" Type="numeric" Mode="In" />
+          <Parameter Name="p_id" Type="numeric" Mode="In" />
+          <Parameter Name="qty" Type="numeric" Mode="In" />
+          <Parameter Name="total" Type="numeric" Mode="In" />
+          <Parameter Name="contact" Type="numeric" Mode="In" />
+          <Parameter Name="plce" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Register_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uname" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="pass" Type="nvarchar" Mode="In" />
+          <Parameter Name="add" Type="nvarchar" Mode="In" />
+          <Parameter Name="db" Type="date" Mode="In" />
+          <Parameter Name="cont" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="show_order_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="update_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_id" Type="numeric" Mode="In" />
+          <Parameter Name="p_nm" Type="nvarchar" Mode="In" />
+          <Parameter Name="img" Type="nvarchar" Mode="In" />
+          <Parameter Name="qt" Type="numeric" Mode="In" />
+          <Parameter Name="prc" Type="numeric" Mode="In" />
+          <Parameter Name="disc" Type="numeric" Mode="In" />
+          <Parameter Name="isdis" Type="bit" Mode="In" />
+          <Parameter Name="isactv" Type="bit" Mode="In" />
+          <Parameter Name="isdelt" Type="bit" Mode="In" />
+          <Parameter Name="isnew" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="updateorder_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oid" Type="numeric" Mode="In" />
+          <Parameter Name="process" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="updateQt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="qty" Type="numeric" Mode="In" />
+          <Parameter Name="pid" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="userlist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="emailid" Type="nvarchar" Mode="In" />
+          <Parameter Name="pass" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ShopingModelStoreContainer">
+          <EntitySet Name="AdminMst" EntityType="Self.AdminMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contact" EntityType="Self.contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Mst" EntityType="Self.Order_Mst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMst" EntityType="Self.UserMst" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="p_id_foreingkey" Association="Self.p_id_foreingkey">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Order_Mst" EntitySet="Order_Mst" />
+          </AssociationSet>
+          <AssociationSet Name="u_id_foreingkey" Association="Self.u_id_foreingkey">
+            <End Role="UserMst" EntitySet="UserMst" />
+            <End Role="Order_Mst" EntitySet="Order_Mst" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShopingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="subject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="message" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Order_Mst">
+          <Key>
+            <PropertyRef Name="o_id" />
+          </Key>
+          <Property Name="o_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_id" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="p_id" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="qty" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="total" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="isprocessed" Type="Boolean" Nullable="false" />
+          <Property Name="o_date" Type="DateTime" Precision="0" />
+          <Property Name="contact" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="Self.p_id_foreingkey" FromRole="Order_Mst" ToRole="Product" />
+          <NavigationProperty Name="UserMst" Relationship="Self.u_id_foreingkey" FromRole="Order_Mst" ToRole="UserMst" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="qty" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="isdiscount" Type="Boolean" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="isdelete" Type="Boolean" />
+          <Property Name="isnew" Type="Boolean" />
+          <NavigationProperty Name="Order_Mst" Relationship="Self.p_id_foreingkey" FromRole="Product" ToRole="Order_Mst" />
+        </EntityType>
+        <EntityType Name="UserMst">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dob" Type="DateTime" Precision="0" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="isdelete" Type="Boolean" />
+          <Property Name="conatcat" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Order_Mst" Relationship="Self.u_id_foreingkey" FromRole="UserMst" ToRole="Order_Mst" />
+        </EntityType>
+        <Association Name="p_id_foreingkey">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Order_Mst" Type="Self.Order_Mst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="Order_Mst">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="u_id_foreingkey">
+          <End Role="UserMst" Type="Self.UserMst" Multiplicity="0..1" />
+          <End Role="Order_Mst" Type="Self.Order_Mst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMst">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="Order_Mst">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShopingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="contacts" EntityType="Self.contact" />
+          <EntitySet Name="Order_Mst" EntityType="Self.Order_Mst" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="UserMsts" EntityType="Self.UserMst" />
+          <AssociationSet Name="p_id_foreingkey" Association="Self.p_id_foreingkey">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Order_Mst" EntitySet="Order_Mst" />
+          </AssociationSet>
+          <AssociationSet Name="u_id_foreingkey" Association="Self.u_id_foreingkey">
+            <End Role="UserMst" EntitySet="UserMsts" />
+            <End Role="Order_Mst" EntitySet="Order_Mst" />
+          </AssociationSet>
+          <FunctionImport Name="allproduct" ReturnType="Collection(ShopingModel.allproduct_Result)" />
+          <FunctionImport Name="contact_sp" ReturnType="Collection(ShopingModel.contact_sp_Result)" />
+          <FunctionImport Name="discount_sp" ReturnType="Collection(ShopingModel.discount_sp_Result)" />
+          <FunctionImport Name="history_sp" ReturnType="Collection(ShopingModel.history_sp_Result)">
+          <Parameter Name="u_id" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="insert_contact">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="phn" Mode="In" Type="Decimal" />
+            <Parameter Name="sub" Mode="In" Type="String" />
+            <Parameter Name="meg" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="insertProduct_sp">
+            <Parameter Name="u_id" Mode="In" Type="Decimal" />
+            <Parameter Name="p_id" Mode="In" Type="Decimal" />
+            <Parameter Name="qty" Mode="In" Type="Decimal" />
+            <Parameter Name="total" Mode="In" Type="Decimal" />
+            <Parameter Name="contact" Mode="In" Type="Decimal" />
+            <Parameter Name="plce" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="itemselected_sp" ReturnType="Collection(ShopingModel.itemselected_sp_Result)">
+          <Parameter Name="pr_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="newproduct_sp" ReturnType="Collection(ShopingModel.newproduct_sp_Result)" />
+          <FunctionImport Name="order_insert">
+            <Parameter Name="u_id" Mode="In" Type="Decimal" />
+            <Parameter Name="p_id" Mode="In" Type="Decimal" />
+            <Parameter Name="qty" Mode="In" Type="Decimal" />
+            <Parameter Name="total" Mode="In" Type="Decimal" />
+            <Parameter Name="contact" Mode="In" Type="Decimal" />
+            <Parameter Name="plce" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Register_sp">
+            <Parameter Name="uname" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+            <Parameter Name="add" Mode="In" Type="String" />
+            <Parameter Name="db" Mode="In" Type="DateTime" />
+            <Parameter Name="cont" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="show_order_sp" ReturnType="Collection(ShopingModel.show_order_sp_Result)" />
+          <FunctionImport Name="updateQt">
+            <Parameter Name="qty" Mode="In" Type="Decimal" />
+            <Parameter Name="pid" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="userlist" ReturnType="Collection(String)">
+            <Parameter Name="emailid" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="insert_product">
+            <Parameter Name="p_nm" Mode="In" Type="String" />
+            <Parameter Name="img" Mode="In" Type="String" />
+            <Parameter Name="qt" Mode="In" Type="Decimal" />
+            <Parameter Name="prc" Mode="In" Type="Decimal" />
+            <Parameter Name="disc" Mode="In" Type="Decimal" />
+            <Parameter Name="isdis" Mode="In" Type="Boolean" />
+            <Parameter Name="isactv" Mode="In" Type="Boolean" />
+            <Parameter Name="isdelt" Mode="In" Type="Boolean" />
+            <Parameter Name="isnew" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="manage_order_" ReturnType="Collection(ShopingModel.manage_order__Result)">
+          <Parameter Name="oid" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="updateorder_sp">
+            <Parameter Name="oid" Mode="In" Type="Decimal" />
+            <Parameter Name="process" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="update_product">
+            <Parameter Name="p_id" Mode="In" Type="Decimal" />
+            <Parameter Name="p_nm" Mode="In" Type="String" />
+            <Parameter Name="img" Mode="In" Type="String" />
+            <Parameter Name="qt" Mode="In" Type="Decimal" />
+            <Parameter Name="prc" Mode="In" Type="Decimal" />
+            <Parameter Name="disc" Mode="In" Type="Decimal" />
+            <Parameter Name="isdis" Mode="In" Type="Boolean" />
+            <Parameter Name="isactv" Mode="In" Type="Boolean" />
+            <Parameter Name="isdelt" Mode="In" Type="Boolean" />
+            <Parameter Name="isnew" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <EntitySet Name="AdminMsts" EntityType="ShopingModel.AdminMst" />
+        </EntityContainer>
+        <ComplexType Name="allproduct_Result">
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="discount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="isdiscount" Nullable="true" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+          <Property Type="Boolean" Name="isdelete" Nullable="true" />
+          <Property Type="Boolean" Name="isnew" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="contact_sp_Result">
+          <Property Type="Int32" Name="c_id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="phone" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="subject" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="message" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="discount_sp_Result">
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="discount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="isdiscount" Nullable="true" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+          <Property Type="Boolean" Name="isdelete" Nullable="true" />
+          <Property Type="Boolean" Name="isnew" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="history_sp_Result">
+          <Property Type="Boolean" Name="isprocessed" Nullable="false" />
+          <Property Type="DateTime" Name="o_date" Nullable="true" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="discount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="itemselected_sp_Result">
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="discount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="isdiscount" Nullable="true" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+          <Property Type="Boolean" Name="isdelete" Nullable="true" />
+          <Property Type="Boolean" Name="isnew" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="newproduct_sp_Result">
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="discount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="isdiscount" Nullable="true" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+          <Property Type="Boolean" Name="isdelete" Nullable="true" />
+          <Property Type="Boolean" Name="isnew" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="show_order_sp_Result">
+          <Property Type="Int32" Name="o_id" Nullable="false" />
+          <Property Type="Decimal" Name="u_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="o_date" Nullable="true" />
+          <Property Type="Boolean" Name="isprocessed" Nullable="false" />
+          <Property Type="Decimal" Name="contact" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="place" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="manage_order__Result">
+          <Property Type="Int32" Name="o_id" Nullable="false" />
+          <Property Type="Decimal" Name="u_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="o_date" Nullable="true" />
+          <Property Type="Boolean" Name="isprocessed" Nullable="false" />
+          <Property Type="Decimal" Name="contact" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="place" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="AdminMst">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShopingModelStoreContainer" CdmEntityContainer="ShopingEntities">
+          <EntitySetMapping Name="contacts">
+            <EntityTypeMapping TypeName="ShopingModel.contact">
+              <MappingFragment StoreEntitySet="contact">
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Mst">
+            <EntityTypeMapping TypeName="ShopingModel.Order_Mst">
+              <MappingFragment StoreEntitySet="Order_Mst">
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="isprocessed" ColumnName="isprocessed" />
+                <ScalarProperty Name="o_date" ColumnName="o_date" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="place" ColumnName="place" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ShopingModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="isdiscount" ColumnName="isdiscount" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="isnew" ColumnName="isnew" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMsts">
+            <EntityTypeMapping TypeName="ShopingModel.UserMst">
+              <MappingFragment StoreEntitySet="UserMst">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="conatcat" ColumnName="conatcat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="allproduct" FunctionName="ShopingModel.Store.allproduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.allproduct_Result">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="isdiscount" ColumnName="isdiscount" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="isnew" ColumnName="isnew" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="contact_sp" FunctionName="ShopingModel.Store.contact_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.contact_sp_Result">
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="discount_sp" FunctionName="ShopingModel.Store.discount_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.discount_sp_Result">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="isdiscount" ColumnName="isdiscount" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="isnew" ColumnName="isnew" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="history_sp" FunctionName="ShopingModel.Store.history_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.history_sp_Result">
+                <ScalarProperty Name="isprocessed" ColumnName="isprocessed" />
+                <ScalarProperty Name="o_date" ColumnName="o_date" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insert_contact" FunctionName="ShopingModel.Store.insert_contact" />
+          <FunctionImportMapping FunctionImportName="insertProduct_sp" FunctionName="ShopingModel.Store.insertProduct_sp" />
+          <FunctionImportMapping FunctionImportName="itemselected_sp" FunctionName="ShopingModel.Store.itemselected_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.itemselected_sp_Result">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="isdiscount" ColumnName="isdiscount" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="isnew" ColumnName="isnew" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="newproduct_sp" FunctionName="ShopingModel.Store.newproduct_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.newproduct_sp_Result">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="isdiscount" ColumnName="isdiscount" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="isnew" ColumnName="isnew" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="order_insert" FunctionName="ShopingModel.Store.order_insert" />
+          <FunctionImportMapping FunctionImportName="Register_sp" FunctionName="ShopingModel.Store.Register_sp" />
+          <FunctionImportMapping FunctionImportName="show_order_sp" FunctionName="ShopingModel.Store.show_order_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.show_order_sp_Result">
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="o_date" ColumnName="o_date" />
+                <ScalarProperty Name="isprocessed" ColumnName="isprocessed" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="place" ColumnName="place" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="updateQt" FunctionName="ShopingModel.Store.updateQt" />
+          <FunctionImportMapping FunctionImportName="userlist" FunctionName="ShopingModel.Store.userlist" />
+          <FunctionImportMapping FunctionImportName="insert_product" FunctionName="ShopingModel.Store.insert_product" />
+          <FunctionImportMapping FunctionImportName="manage_order_" FunctionName="ShopingModel.Store.manage_order_">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.manage_order__Result">
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="o_date" ColumnName="o_date" />
+                <ScalarProperty Name="isprocessed" ColumnName="isprocessed" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="place" ColumnName="place" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="updateorder_sp" FunctionName="ShopingModel.Store.updateorder_sp" />
+          <FunctionImportMapping FunctionImportName="update_product" FunctionName="ShopingModel.Store.update_product" />
+          <EntitySetMapping Name="AdminMsts">
+            <EntityTypeMapping TypeName="ShopingModel.AdminMst">
+              <MappingFragment StoreEntitySet="AdminMst">
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
