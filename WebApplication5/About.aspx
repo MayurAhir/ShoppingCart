@@ -3,9 +3,11 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
     <h1>Lambton College.</h1>
-    <h2>Akshesh Patel</h2>
-    <h2>Davindar Singh</h2>
-    <h2>Mayur Ahir</h2>
-    <h2>Parmit Singh</h2>
+   <p>
+Its small demo of shoping website developed in Asp.net technology.This website allow user to navigate to
+       various items, order the item, reviwe the order history with customer authentication.    
+     
+    <h2>Developed By</h2><h3> Mayur Ahir</h3>
+   
 
 </asp:Content>

@@ -21,12 +21,13 @@ namespace WebApplication5.Account
 
         protected void Reset_Click(object sender, EventArgs e)
         {
-            ShopingEntities db = new ShopingEntities();
-            var m = db.UserMsts.Where(c => c.email == Email.Text && c.password == Password.Text);
+            ShopingEntities1 db = new ShopingEntities1();
+           var m= db.UserMsts.Where(c => c.email == Email.Text);
             if (m.Any())
             {
+                   
                 UserMst a = new UserMst();
-                a=db.UserMsts.Single(c => c.email == Email.Text && c.password == Password.Text);
+                a = db.UserMsts.Single(c => c.email == Email.Text);
                 a.password = newpass.Text;
                 db.SaveChanges();
                 Response.Redirect("~/Default.aspx");

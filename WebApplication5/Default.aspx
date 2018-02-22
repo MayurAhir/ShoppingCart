@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication5._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="WebApplication5._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -38,7 +38,7 @@
             </ol>
             <div class="carousel-inner">
 
-                <div class="item active" style="background-image: url(images/slider/bg1.jpg)">
+                <div class="item active" style="background-image: url(/files/bg1.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
@@ -51,7 +51,7 @@
 
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
-                                    <img src="images/slider/img1.png" class="img-responsive">
+                                    <img src="/files/img1.png" class="mayur">
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                     </div>
                 </div><!--/.item-->
 
-                <div class="item" style="background-image: url(images/slider/bg2.jpg)">
+                <div class="item" style="background-image: url(/files/bg2.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
@@ -72,7 +72,7 @@
 
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
-                                    <img src="images/slider/img2.png" class="img-responsive">
+                                    <img src="/files/img2.png" class="mayur">
                                 </div>
                             </div>
 
@@ -80,7 +80,7 @@
                     </div>
                 </div><!--/.item-->
 
-                <div class="item" style="background-image: url(images/slider/bg3.jpg)">
+                <div class="item" style="background-image: url(/files/bg3.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
-                                    <img src="images/slider/img3.png" class="img-responsive">
+                                    <img src="/files/img3.png"class="mayur">
                                 </div>
                             </div>
                         </div>
@@ -108,25 +108,26 @@
         </a>
     </section>
     <!--/#main-slider-->
-    <section id="feature">
+ <section id="feature">
         <div class="container">
-           <div class="center wow fadeInDown">
+           <div class="center wow fadeInDown"style="visibility: visible; animation-name: fadeInDown;">
                 <h2>Items On Sell!!</h2>
-                <p class="lead">Easy to use, Responsive features, Mobile-first approach <br> Browser compatibility Bootstrap is compatible with all modern browsers</p>
+                <p class="lead" style="color:goldenrod">Get update of sell offers by frequently visting to our site<br/>Best product with Cheapest price</p>
             </div>
 
             <div class="row">
                 <div class="features">
-                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    
                         <div class="feature-wrap">
                             <!-- start from here-->
-                         <asp:Repeater ID="Repeater1" runat="server">
+                         <asp:Repeater ID="Repeater1" runat="server" OnItemCommand="Repeater1_ItemCommand">
 
             <ItemTemplate>
                 <li class="col-md-4" style="float:left;">
                     <div class="gal-item">
-                       <img class="img-responsive" src='../images/tempr/<%#Eval("image")%>' />
-       
+                         
+ <img class="mayur1"  src="/files/<%#Eval("image")%>" />
+                     
                     </div>
                     <span class="item-text text-center" style="text-align:center"> <%#Eval("p_name") %></span><br />
                     $<span class="item-text text-center" style="text-align:center"> <%#Eval("price") %></span><br />
@@ -137,26 +138,28 @@
             </asp:Repeater>
                            
                         </div>
-                    </div>
+                   
                 </div><!--/.services-->
             </div><!--/.row-->    
         </div><!--/.container-->
     </section>
+
     <!--/#feature-->
     <section id="middle">
         <div class="container">
             <div class="row">
                
 
-                <div class="col-sm-6 wow fadeInDown">
-                 <h2>New Items In Markets!!</h2>
+                <div class="col-sm-12 wow fadeInDown">
+                  <h2>New Items In Markets!</h2>
                     <div class="accordion">
-                      <asp:Repeater ID="Repeater2" runat="server">
+                       
+                      <asp:Repeater ID="Repeater2" runat="server" OnItemCommand="Repeater2_ItemCommand">
 
             <ItemTemplate>
-                <li class="col-md-4" style="float:left;">
+                <li class="col-md-4" style="float:left;list-style:none">
                     <div class="gal-item">
-                       <img class="img-responsive" src='../images/tempr/<%#Eval("image")%>' />
+                       <img class="mayur1" src="/files/<%#Eval("image") %>" />
        
                     </div>
                     <span class="item-text text-center" style="text-align:center;color:white"> <%#Eval("p_name") %></span><br />

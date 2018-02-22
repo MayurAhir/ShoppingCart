@@ -10,7 +10,7 @@ namespace WebApplication5.Admin
 {
     public partial class order : System.Web.UI.Page
     {
-        ShopingEntities db = new ShopingEntities();
+        ShopingEntities1 db = new ShopingEntities1();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["username"] != null)

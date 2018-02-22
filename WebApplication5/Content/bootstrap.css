@@ -305,6 +305,9 @@ table {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
+label{
+    color:white!important;
+}
 
 html {
   font-size: 62.5%;
@@ -315,7 +318,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
+  color: white !important;
   background-color: #ffffff;
 }
 
@@ -1407,7 +1410,8 @@ pre code {
 
 table {
   max-width: 100%;
-  background-color: transparent;
+  background-color:transparent;
+  color:white !important;
 }
 
 th {
@@ -6814,4 +6818,29 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
+
+}
+
+
+
+
+a.scrollup{
+    color:#fff;
+	height:55px;
+	width:55px;
+	font-size:22px;
+	line-height:50px;
+	text-align:center;
+	text-decoration:none;
+	position:fixed;
+	bottom:10px;
+	right:40px;	
+	opacity:0,5;
+	border-radius:50%;
+	z-index:999;
+}
+a.scrollup:hover{
+	opacity:1;
+	background-color:#36CBD4;
+	color:#fff;;	
 }

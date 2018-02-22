@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">New Password</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Confirm Password</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="newpass" TextMode="Password" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="newpass"

@@ -71,7 +71,9 @@ namespace WebApplication5
         {
             if(Session["username"]!=null && Session["u_id"]!=null)
             {
+                HyperLink1.Visible = false;
                 Button1.Visible = true;
+                Label1.Text = "Hello  " + Session["username"];
             }
         }
 

@@ -18,7 +18,8 @@
       
         </Columns>
     </asp:GridView>
-         <asp:Button ID="Button3" runat="server" Text="Buy More Product" OnClick="Button3_Click" Visible="False" />
+         <h2>   <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="Product.aspx" Visible="false">Buy More Product</asp:HyperLink></h2>
+ 
          <asp:Label ID="Label1" runat="server"></asp:Label>
     </p>
     <p>

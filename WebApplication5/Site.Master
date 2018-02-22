@@ -11,20 +11,36 @@
     <link href="Content/prettyPhoto.css" rel="stylesheet" type="text/css" />
     <link href="Content/main.css" rel="stylesheet" type="text/css" />
     <link href="Content/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="Content/Footer-with-button-logo.css" rel="stylesheet" />
      <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
         rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> -My Shopping</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+ <style>
+     #body {
+   
+    /* Full height */
+    height: 100%; 
 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+     </style>
 </head>
-<body>
+
+
+<body style="background-image:url(/files/bg6.jpg);background-attachment: fixed;background-size:auto;background-repeat:no-repeat;">
      <script src='<%= ResolveUrl("~/Scripts/jquery.js") %>'></script>
 
     <script src='<%= ResolveUrl("Scripts/bootstrap.min.js")%>'></script>
@@ -44,7 +60,8 @@
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
-                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+               
+                 <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
                 <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
                 <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
                 <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
@@ -68,7 +85,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="Default.aspx"><img src="images/icn.png" width="100px" height="100px" alt="logo"></a>
+                    <a class="navbar-brand" href="~/Default.aspx"><img src="/files/icn.png"  style="width:70px;height:70px;"  alt="logo"></a>
                 </div>
 				
                 <div class="collapse navbar-collapse navbar-right">
@@ -76,53 +93,84 @@
                         <li class="active">
                             <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Default.aspx">Home</asp:HyperLink></li>
                        <li><asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Product.aspx">Product</asp:HyperLink></li>
-                        <li><asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/About.aspx">About Us</asp:HyperLink></li>                        
-                      
-                        <li><asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Account/Register.aspx">Register</asp:HyperLink></li> 
+                       <li> <asp:HyperLink ID="HyperLink8" runat="server" NavigateUrl="~/orderhistory.aspx">Order History</asp:HyperLink></li>
+                         <li> <asp:HyperLink ID="HyperLink9" runat="server" NavigateUrl="~/Portfolio.aspx">Portfolio</asp:HyperLink> </li>
+                        
+                         <li><asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/About.aspx">About Us</asp:HyperLink></li>                        
+                         
                         <li><asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Contact.aspx">Contact us</asp:HyperLink></li>  
-                     <li>  <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Account/Login.aspx">Login</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Account/Register.aspx">Register</asp:HyperLink></li> 
+                         <li>  <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Account/Login.aspx">Login</asp:HyperLink></li>
+                      
+                        
 
-                         <li>  <asp:Button ID="Button1" runat="server" Text="LogOut" OnClick="Button1_Click" ForeColor="#6600FF" Visible="False" /> </li>                     
+                         <li>  <asp:Button ID="Button1" runat="server" Text="LogOut" OnClick="Button1_Click" ForeColor="#6600FF" Visible="False" CausesValidation="False" /> </li>                     
                     </ul>
+                   
                     
                  
                 </div>
+                 <asp:Label ID="Label1" runat="server" ForeColor="White"></asp:Label>
                  
             </div><!--/.container-->
         </nav><!--/nav-->
  
    
                 <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" >
              
 
             </asp:ContentPlaceHolder>
             <hr />
                     
-             <footer id="footer" class="midnight-blue">
+              <footer id="myFooter">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2015 <a target="_blank" href="http://aspxtemplates.com/" title="Free Twitter Bootstrap asp.net templates">aspxtemplates</a>. All Rights Reserved.
+                <div class="col-sm-3">
+                    <h2 class="logo"><a target="_blank" href="http://mayurahir-001-site1.itempurl.com" title="Myshopping">Myshopping</a>
+ </h2>
                 </div>
-                <div class="col-sm-6">
-                    <ul class="pull-right">
-                        <li class="active">
-                            <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/Default.aspx">Home</asp:HyperLink></li>
-                       <li><asp:HyperLink ID="HyperLink8" runat="server" NavigateUrl="~/Product.aspx">Product</asp:HyperLink></li>
-                        <li><asp:HyperLink ID="HyperLink9" runat="server" NavigateUrl="~/About.aspx">About Us</asp:HyperLink></li>                        
-                      
-                        <li><asp:HyperLink ID="HyperLink10" runat="server" NavigateUrl="~/Account/Register.aspx">Register</asp:HyperLink></li> 
-                        <li><asp:HyperLink ID="HyperLink11" runat="server" NavigateUrl="~/Contact.aspx">Contact us</asp:HyperLink></li>  
-                     <li>  <asp:HyperLink ID="HyperLink12" runat="server" NavigateUrl="~/Account/Login.aspx">Login</asp:HyperLink></li>
-
+                <div class="col-sm-2">
+                    <h5>Get started</h5>
+                    <ul>
+                       <li><asp:HyperLink ID="HyperLink16" runat="server" NavigateUrl="~/Account/Register.aspx">Register</asp:HyperLink></li> 
+                        <li><asp:HyperLink ID="HyperLink17" runat="server" NavigateUrl="~/Contact.aspx">Contact us</asp:HyperLink></li>  
+                     <li>  <asp:HyperLink ID="HyperLink18" runat="server" NavigateUrl="~/Account/Login.aspx">Login</asp:HyperLink></li>
                     </ul>
+                </div>
+                <div class="col-sm-2">
+                    <h5>Services</h5>
+                    <ul>
+                       <li>  <asp:HyperLink ID="HyperLink13" runat="server" NavigateUrl="~/Default.aspx">Home</asp:HyperLink></li>
+                       <li><asp:HyperLink ID="HyperLink14" runat="server" NavigateUrl="~/Product.aspx">Product</asp:HyperLink></li>
+
+                        <li> <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/orderhistory.aspx">Order History</asp:HyperLink></li>
+                       <li> <asp:HyperLink ID="HyperLink10" runat="server" NavigateUrl="~/Portfolio.aspx">Portfolio</asp:HyperLink></li>
+                        <li><asp:HyperLink ID="HyperLink15" runat="server" NavigateUrl="~/About.aspx">About Us</asp:HyperLink></li>                        
+                      <li>
+                          <asp:HyperLink ID="HyperLink11" runat="server" NavigateUrl="~/Admin/login.aspx">Administrator</asp:HyperLink>
+                          </li>
+                    </ul>
+                </div>
+               
+                <div class="col-sm-3">
+                    <div class="social-networks">
+                        <a href="https://twitter.com/login" class="twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="https://plus.google.com/" class="google" target="_blank"><i class="fa fa-google-plus"></i></a>
+                        <a href="https://www.linkedin.com/in/mayur-ahir-22a75a123/" class="linkedin" target="_blank"><i class="fa fa-linkedin"></i></a>
+
+                    </div>
+                   
                 </div>
             </div>
         </div>
-        <a href="#" class="back-to-top"><i class="fa fa-2x fa-angle-up"></i></a>
+        <div class="footer-copyright">
+            <p>© 2018 All Rights Reserved.</p>
+        </div>
+                          <a href="#" class="back-to-top" style="display:inline"> <i class="fa fa-2x fa-angle-up"></i></a>
     </footer>
-                    </div>
+  </div>
 
     </form>
 </body>

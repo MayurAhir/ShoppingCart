@@ -7,17 +7,16 @@
             
       <div class="row">
                 <div class="features">
-                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <div class="feature-wrap">
+                                          <div class="feature-wrap">
                             <!-- start from here-->
-                         <asp:Repeater ID="Repeater1" runat="server">
+     <asp:Repeater ID="Repeater1" runat="server" OnItemCommand="Repeater1_ItemCommand">
 
             <ItemTemplate>
                 <li class="col-md-4" style="float:left;">
-                    <div class="gal-item">
-                       <img class="img-responsive" src='../images/tempr/<%#Eval("image")%>' />
+                 
+                       <img class="mayur1" src="/files/<%#Eval("image")%>" />
        
-                    </div>
+                  
                     <span class="item-text text-center" style="text-align:center"> <%#Eval("p_name") %></span><br />
                     
                     $<span class="item-text text-center" style="text-align:center"> <%#Eval("price") %></span><br />
@@ -27,15 +26,17 @@
                 </li>
             </ItemTemplate>
 
-            </asp:Repeater>
-                           
+            </asp:Repeater>                          
                             
-                           
+                                                                             
                         </div>
-                    </div>
+                    
                 </div><!--/.services-->
                 
             </div><!--/.row-->
+            <asp:Button ID="Button1" runat="server" Text="Show Order History" OnClick="Button1_Click" />
+            <asp:Label ID="Label1" runat="server"></asp:Label>
         </div>
+
         </section>
 </asp:Content>

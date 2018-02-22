@@ -9,7 +9,7 @@ namespace WebApplication5.Admin
 {
     public partial class register : System.Web.UI.Page
     {
-        ShopingEntities db = new ShopingEntities();
+        ShopingEntities1 db = new ShopingEntities1();
         protected void Page_Load(object sender, EventArgs e)
         {
 

@@ -13,7 +13,7 @@ namespace WebApplication5.Admin
 {
     public partial class manageorder : System.Web.UI.Page
     {
-        ShopingEntities DB = new ShopingEntities();
+        ShopingEntities1 db = new ShopingEntities1();
         int id;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +24,7 @@ namespace WebApplication5.Admin
                 {
                     Label6.Text = "Something went wrong!!";
                 }
-                var m = DB.manage_order_(Convert.ToDecimal(id)).ToList();
+                var m = db.manage_order_(Convert.ToDecimal(id)).ToList();
 
                 if (m.Any())
                 {
@@ -56,10 +56,10 @@ namespace WebApplication5.Admin
                 // var m = from i in DB.Order_Mst where i.o_id == id select i;
                 id = Convert.ToInt32(Request.QueryString["id"]);
                 Order_Mst o = new Order_Mst();
-                o = DB.Order_Mst.Single(c => c.o_id == id);  
+                o = db.Order_Mst.Single(c => c.o_id == id);  
                 o.isprocessed = true;
 
-                DB.SaveChanges();
+                db.SaveChanges();
 
                  Label6.Text = "status is updated";
 
@@ -70,10 +70,10 @@ namespace WebApplication5.Admin
                 id = Convert.ToInt32(Request.QueryString["id"]);
                 Order_Mst o = new Order_Mst();
 
-                o = DB.Order_Mst.Single(c => c.o_id == id);
+                o = db.Order_Mst.Single(c => c.o_id == id);
                 o.isprocessed = false;
 
-                DB.SaveChanges();
+                db.SaveChanges();
                 Label6.Text = "status is updated";
 
                  Response.Redirect("order.aspx");

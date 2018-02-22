@@ -85,21 +85,12 @@ namespace WebApplication5.Account {
         protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
         
         /// <summary>
-        /// RegisterHyperLink0 control.
+        /// Button2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink0;
-        
-        /// <summary>
-        /// OpenAuthLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApplication5.Account.OpenAuthProviders OpenAuthLogin;
+        protected global::System.Web.UI.WebControls.Button Button2;
     }
 }

@@ -70,6 +70,10 @@
 
 
 
+    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">Add New Item</asp:LinkButton>
+
+
+
 </form>
 </body>
 </html>

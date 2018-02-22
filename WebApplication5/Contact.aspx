@@ -15,7 +15,8 @@
                 <div class="row">
                     <div class="col-sm-5 text-center">
                         <div class="gmap">
-                            <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.ca/maps/place/Lambton+College/@43.7732574,-79.3380933,17z/data=!3m1!4b1!4m5!3m4!1s0x882b2d6fc6ca7f5d:0x2a12502c1cd1e815!8m2!3d43.7732574!4d-79.3358993"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2880.9934895792094!2d-79.33803434089181!3d43.77299397671824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d6fc6ca7f5d%3A0x2a12502c1cd1e815!2sLambton+College!5e0!3m2!1sen!2sca!4v1518363502687" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
                         </div>
                     </div>
 
@@ -24,8 +25,9 @@
                             <li class="col-sm-6">
                                 <address>
                                     <h5>Head Office</h5>
-                                    <p>LunciKuai  <br>
-                                    Navsari, </p>
+                                    <p>Toronto <br>
+                                        Ontario,Canada
+                                  </p>
                                     <p>Phone:123-456-7894 <br>
                                     Email Address:info@techlogica.com</p>
                                 </address>

@@ -54,8 +54,7 @@
 
                 </div>
                 <p>
-                    <asp:HyperLink runat="server" NavigateUrl="~/Admin/Register.aspx" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink><br>
-                    <asp:HyperLink runat="server" NavigateUrl="~/Admin/resetpassword.aspx" ID="HyperLink1" ViewStateMode="Disabled">Reset Password</asp:HyperLink><br>
+       <asp:HyperLink runat="server" NavigateUrl="~/Admin/resetpassword.aspx" ID="HyperLink1" ViewStateMode="Disabled">Reset Password</asp:HyperLink><br>
 
                 </p>
                 <p>

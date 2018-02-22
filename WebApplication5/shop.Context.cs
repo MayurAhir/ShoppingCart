@@ -15,10 +15,10 @@ namespace WebApplication5
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ShopingEntities : DbContext
+    public partial class ShopingEntities1 : DbContext
     {
-        public ShopingEntities()
-            : base("name=ShopingEntities")
+        public ShopingEntities1()
+            : base("name=ShopingEntities1")
         {
         }
     
@@ -27,11 +27,11 @@ namespace WebApplication5
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AdminMst> AdminMsts { get; set; }
         public virtual DbSet<contact> contacts { get; set; }
         public virtual DbSet<Order_Mst> Order_Mst { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<UserMst> UserMsts { get; set; }
-        public virtual DbSet<AdminMst> AdminMsts { get; set; }
     
         public virtual ObjectResult<allproduct_Result> allproduct()
         {
@@ -82,6 +82,47 @@ namespace WebApplication5
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_contact", nameParameter, emailParameter, phnParameter, subParameter, megParameter);
         }
     
+        public virtual int insert_product(string p_nm, string img, Nullable<decimal> qt, Nullable<decimal> prc, Nullable<decimal> disc, Nullable<bool> isdis, Nullable<bool> isactv, Nullable<bool> isdelt, Nullable<bool> isnew)
+        {
+            var p_nmParameter = p_nm != null ?
+                new ObjectParameter("p_nm", p_nm) :
+                new ObjectParameter("p_nm", typeof(string));
+    
+            var imgParameter = img != null ?
+                new ObjectParameter("img", img) :
+                new ObjectParameter("img", typeof(string));
+    
+            var qtParameter = qt.HasValue ?
+                new ObjectParameter("qt", qt) :
+                new ObjectParameter("qt", typeof(decimal));
+    
+            var prcParameter = prc.HasValue ?
+                new ObjectParameter("prc", prc) :
+                new ObjectParameter("prc", typeof(decimal));
+    
+            var discParameter = disc.HasValue ?
+                new ObjectParameter("disc", disc) :
+                new ObjectParameter("disc", typeof(decimal));
+    
+            var isdisParameter = isdis.HasValue ?
+                new ObjectParameter("isdis", isdis) :
+                new ObjectParameter("isdis", typeof(bool));
+    
+            var isactvParameter = isactv.HasValue ?
+                new ObjectParameter("isactv", isactv) :
+                new ObjectParameter("isactv", typeof(bool));
+    
+            var isdeltParameter = isdelt.HasValue ?
+                new ObjectParameter("isdelt", isdelt) :
+                new ObjectParameter("isdelt", typeof(bool));
+    
+            var isnewParameter = isnew.HasValue ?
+                new ObjectParameter("isnew", isnew) :
+                new ObjectParameter("isnew", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_product", p_nmParameter, imgParameter, qtParameter, prcParameter, discParameter, isdisParameter, isactvParameter, isdeltParameter, isnewParameter);
+        }
+    
         public virtual int insertProduct_sp(Nullable<decimal> u_id, Nullable<decimal> p_id, Nullable<decimal> qty, Nullable<decimal> total, Nullable<decimal> contact, string plce)
         {
             var u_idParameter = u_id.HasValue ?
@@ -118,6 +159,15 @@ namespace WebApplication5
                 new ObjectParameter("pr_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<itemselected_sp_Result>("itemselected_sp", pr_idParameter);
+        }
+    
+        public virtual ObjectResult<manage_order__Result> manage_order_(Nullable<decimal> oid)
+        {
+            var oidParameter = oid.HasValue ?
+                new ObjectParameter("oid", oid) :
+                new ObjectParameter("oid", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<manage_order__Result>("manage_order_", oidParameter);
         }
     
         public virtual ObjectResult<newproduct_sp_Result> newproduct_sp()
@@ -188,95 +238,6 @@ namespace WebApplication5
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<show_order_sp_Result>("show_order_sp");
         }
     
-        public virtual int updateQt(Nullable<decimal> qty, Nullable<decimal> pid)
-        {
-            var qtyParameter = qty.HasValue ?
-                new ObjectParameter("qty", qty) :
-                new ObjectParameter("qty", typeof(decimal));
-    
-            var pidParameter = pid.HasValue ?
-                new ObjectParameter("pid", pid) :
-                new ObjectParameter("pid", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateQt", qtyParameter, pidParameter);
-        }
-    
-        public virtual ObjectResult<string> userlist(string emailid, string pass)
-        {
-            var emailidParameter = emailid != null ?
-                new ObjectParameter("emailid", emailid) :
-                new ObjectParameter("emailid", typeof(string));
-    
-            var passParameter = pass != null ?
-                new ObjectParameter("pass", pass) :
-                new ObjectParameter("pass", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("userlist", emailidParameter, passParameter);
-        }
-    
-        public virtual int insert_product(string p_nm, string img, Nullable<decimal> qt, Nullable<decimal> prc, Nullable<decimal> disc, Nullable<bool> isdis, Nullable<bool> isactv, Nullable<bool> isdelt, Nullable<bool> isnew)
-        {
-            var p_nmParameter = p_nm != null ?
-                new ObjectParameter("p_nm", p_nm) :
-                new ObjectParameter("p_nm", typeof(string));
-    
-            var imgParameter = img != null ?
-                new ObjectParameter("img", img) :
-                new ObjectParameter("img", typeof(string));
-    
-            var qtParameter = qt.HasValue ?
-                new ObjectParameter("qt", qt) :
-                new ObjectParameter("qt", typeof(decimal));
-    
-            var prcParameter = prc.HasValue ?
-                new ObjectParameter("prc", prc) :
-                new ObjectParameter("prc", typeof(decimal));
-    
-            var discParameter = disc.HasValue ?
-                new ObjectParameter("disc", disc) :
-                new ObjectParameter("disc", typeof(decimal));
-    
-            var isdisParameter = isdis.HasValue ?
-                new ObjectParameter("isdis", isdis) :
-                new ObjectParameter("isdis", typeof(bool));
-    
-            var isactvParameter = isactv.HasValue ?
-                new ObjectParameter("isactv", isactv) :
-                new ObjectParameter("isactv", typeof(bool));
-    
-            var isdeltParameter = isdelt.HasValue ?
-                new ObjectParameter("isdelt", isdelt) :
-                new ObjectParameter("isdelt", typeof(bool));
-    
-            var isnewParameter = isnew.HasValue ?
-                new ObjectParameter("isnew", isnew) :
-                new ObjectParameter("isnew", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_product", p_nmParameter, imgParameter, qtParameter, prcParameter, discParameter, isdisParameter, isactvParameter, isdeltParameter, isnewParameter);
-        }
-    
-        public virtual ObjectResult<manage_order__Result> manage_order_(Nullable<decimal> oid)
-        {
-            var oidParameter = oid.HasValue ?
-                new ObjectParameter("oid", oid) :
-                new ObjectParameter("oid", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<manage_order__Result>("manage_order_", oidParameter);
-        }
-    
-        public virtual int updateorder_sp(Nullable<decimal> oid, Nullable<bool> process)
-        {
-            var oidParameter = oid.HasValue ?
-                new ObjectParameter("oid", oid) :
-                new ObjectParameter("oid", typeof(decimal));
-    
-            var processParameter = process.HasValue ?
-                new ObjectParameter("process", process) :
-                new ObjectParameter("process", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateorder_sp", oidParameter, processParameter);
-        }
-    
         public virtual int update_product(Nullable<decimal> p_id, string p_nm, string img, Nullable<decimal> qt, Nullable<decimal> prc, Nullable<decimal> disc, Nullable<bool> isdis, Nullable<bool> isactv, Nullable<bool> isdelt, Nullable<bool> isnew)
         {
             var p_idParameter = p_id.HasValue ?
@@ -320,6 +281,45 @@ namespace WebApplication5
                 new ObjectParameter("isnew", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_product", p_idParameter, p_nmParameter, imgParameter, qtParameter, prcParameter, discParameter, isdisParameter, isactvParameter, isdeltParameter, isnewParameter);
+        }
+    
+        public virtual int updateorder_sp(Nullable<decimal> oid, Nullable<bool> process)
+        {
+            var oidParameter = oid.HasValue ?
+                new ObjectParameter("oid", oid) :
+                new ObjectParameter("oid", typeof(decimal));
+    
+            var processParameter = process.HasValue ?
+                new ObjectParameter("process", process) :
+                new ObjectParameter("process", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateorder_sp", oidParameter, processParameter);
+        }
+    
+        public virtual int updateQt(Nullable<decimal> qty, Nullable<decimal> pid)
+        {
+            var qtyParameter = qty.HasValue ?
+                new ObjectParameter("qty", qty) :
+                new ObjectParameter("qty", typeof(decimal));
+    
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("pid", pid) :
+                new ObjectParameter("pid", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateQt", qtyParameter, pidParameter);
+        }
+    
+        public virtual ObjectResult<string> userlist(string emailid, string pass)
+        {
+            var emailidParameter = emailid != null ?
+                new ObjectParameter("emailid", emailid) :
+                new ObjectParameter("emailid", typeof(string));
+    
+            var passParameter = pass != null ?
+                new ObjectParameter("pass", pass) :
+                new ObjectParameter("pass", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("userlist", emailidParameter, passParameter);
         }
     }
 }

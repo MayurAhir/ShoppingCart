@@ -51,6 +51,8 @@
 
 
 </form>
+     <asp:HyperLink runat="server" NavigateUrl="~/Admin/Register.aspx" ID="RegisterHyperLink" ViewStateMode="Disabled">Add New Admin</asp:HyperLink><br>
+
 </body>
 </html>
 </asp:Content>

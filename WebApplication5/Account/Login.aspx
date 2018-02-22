@@ -53,15 +53,12 @@
                     <%-- Enable this once you have account confirmation enabled for password reset functionality
                     <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">Forgot your password?</asp:HyperLink>
                     --%>
-                    <asp:HyperLink runat="server" NavigateUrl="~/Account/ResetPassword.aspx" ID="RegisterHyperLink0" ViewStateMode="Disabled">Reset Password</asp:HyperLink>
-                </p>
+              
+                    <asp:Button ID="Button2" runat="server" Text="Forgot Password" OnClick="Button2_Click" />
+                      </p>
             </section>
         </div>
 
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-            </section>
-        </div>
+        
     </div>
 </asp:Content>

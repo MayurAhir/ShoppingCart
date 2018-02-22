@@ -16,7 +16,7 @@ namespace WebApplication5.Admin
 
         protected void Reset_Click(object sender, EventArgs e)
         {
-            ShopingEntities db = new ShopingEntities();
+            ShopingEntities1 db = new ShopingEntities1();
             var m = db.AdminMsts.Where(c => c.email == Email.Text && c.password == Password.Text);
             if (m.Any())
             {

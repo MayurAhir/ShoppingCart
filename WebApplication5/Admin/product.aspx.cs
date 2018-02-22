@@ -10,7 +10,7 @@ namespace WebApplication5.Admin
 {
     public partial class product : System.Web.UI.Page
     {
-        ShopingEntities db = new ShopingEntities();
+        ShopingEntities1 db = new ShopingEntities1();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["username"] != null)
@@ -33,19 +33,28 @@ namespace WebApplication5.Admin
         {
             LinkButton lbtn = (LinkButton)(sender);
             int pid = Convert.ToInt32(lbtn.CommandArgument);
-            var toDelete = db.Products.SingleOrDefault(p => p.p_id == pid);
+            var toDelete = db.Products.Single(p => p.p_id == pid);
+           
+            db.Products.Remove(toDelete);
+
             db.Products.Remove(toDelete);
             db.SaveChanges();
 
             load();
 
-
+           
         }
         protected void load()
         {
             var m = db.allproduct().ToList();
             Gridcontact.DataSource = m;
             Gridcontact.DataBind();
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("products.aspx");
+
         }
     }
 }

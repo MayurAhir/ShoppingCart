@@ -38,7 +38,7 @@
           <Property Name="isprocessed" Type="bit" Nullable="false" />
           <Property Name="o_date" Type="date" />
           <Property Name="contact" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="place" Type="nvarchar" MaxLength="50" />
+          <Property Name="place" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -192,6 +192,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminMst">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="contact">
           <Key>
             <PropertyRef Name="c_id" />
@@ -215,7 +225,7 @@
           <Property Name="isprocessed" Type="Boolean" Nullable="false" />
           <Property Name="o_date" Type="DateTime" Precision="0" />
           <Property Name="contact" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="place" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="Self.p_id_foreingkey" FromRole="Order_Mst" ToRole="Product" />
           <NavigationProperty Name="UserMst" Relationship="Self.u_id_foreingkey" FromRole="Order_Mst" ToRole="UserMst" />
         </EntityType>
@@ -274,7 +284,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShopingEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ShopingEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminMsts" EntityType="Self.AdminMst" />
           <EntitySet Name="contacts" EntityType="Self.contact" />
           <EntitySet Name="Order_Mst" EntityType="Self.Order_Mst" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -300,6 +311,17 @@
             <Parameter Name="sub" Mode="In" Type="String" />
             <Parameter Name="meg" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="insert_product">
+            <Parameter Name="p_nm" Mode="In" Type="String" />
+            <Parameter Name="img" Mode="In" Type="String" />
+            <Parameter Name="qt" Mode="In" Type="Decimal" />
+            <Parameter Name="prc" Mode="In" Type="Decimal" />
+            <Parameter Name="disc" Mode="In" Type="Decimal" />
+            <Parameter Name="isdis" Mode="In" Type="Boolean" />
+            <Parameter Name="isactv" Mode="In" Type="Boolean" />
+            <Parameter Name="isdelt" Mode="In" Type="Boolean" />
+            <Parameter Name="isnew" Mode="In" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="insertProduct_sp">
             <Parameter Name="u_id" Mode="In" Type="Decimal" />
             <Parameter Name="p_id" Mode="In" Type="Decimal" />
@@ -310,6 +332,9 @@
           </FunctionImport>
           <FunctionImport Name="itemselected_sp" ReturnType="Collection(ShopingModel.itemselected_sp_Result)">
           <Parameter Name="pr_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="manage_order_" ReturnType="Collection(ShopingModel.manage_order__Result)">
+          <Parameter Name="oid" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="newproduct_sp" ReturnType="Collection(ShopingModel.newproduct_sp_Result)" />
           <FunctionImport Name="order_insert">
@@ -329,32 +354,6 @@
             <Parameter Name="cont" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="show_order_sp" ReturnType="Collection(ShopingModel.show_order_sp_Result)" />
-          <FunctionImport Name="updateQt">
-            <Parameter Name="qty" Mode="In" Type="Decimal" />
-            <Parameter Name="pid" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="userlist" ReturnType="Collection(String)">
-            <Parameter Name="emailid" Mode="In" Type="String" />
-            <Parameter Name="pass" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="insert_product">
-            <Parameter Name="p_nm" Mode="In" Type="String" />
-            <Parameter Name="img" Mode="In" Type="String" />
-            <Parameter Name="qt" Mode="In" Type="Decimal" />
-            <Parameter Name="prc" Mode="In" Type="Decimal" />
-            <Parameter Name="disc" Mode="In" Type="Decimal" />
-            <Parameter Name="isdis" Mode="In" Type="Boolean" />
-            <Parameter Name="isactv" Mode="In" Type="Boolean" />
-            <Parameter Name="isdelt" Mode="In" Type="Boolean" />
-            <Parameter Name="isnew" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="manage_order_" ReturnType="Collection(ShopingModel.manage_order__Result)">
-          <Parameter Name="oid" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="updateorder_sp">
-            <Parameter Name="oid" Mode="In" Type="Decimal" />
-            <Parameter Name="process" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="update_product">
             <Parameter Name="p_id" Mode="In" Type="Decimal" />
             <Parameter Name="p_nm" Mode="In" Type="String" />
@@ -367,7 +366,18 @@
             <Parameter Name="isdelt" Mode="In" Type="Boolean" />
             <Parameter Name="isnew" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="AdminMsts" EntityType="ShopingModel.AdminMst" />
+          <FunctionImport Name="updateorder_sp">
+            <Parameter Name="oid" Mode="In" Type="Decimal" />
+            <Parameter Name="process" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="updateQt">
+            <Parameter Name="qty" Mode="In" Type="Decimal" />
+            <Parameter Name="pid" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="userlist" ReturnType="Collection(String)">
+            <Parameter Name="emailid" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="allproduct_Result">
           <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
@@ -422,6 +432,20 @@
           <Property Type="Boolean" Name="isdelete" Nullable="true" />
           <Property Type="Boolean" Name="isnew" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="manage_order__Result">
+          <Property Type="Int32" Name="o_id" Nullable="false" />
+          <Property Type="Decimal" Name="u_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="o_date" Nullable="true" />
+          <Property Type="Boolean" Name="isprocessed" Nullable="false" />
+          <Property Type="Decimal" Name="contact" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="place" Nullable="true" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="newproduct_sp_Result">
           <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
           <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
@@ -448,36 +472,23 @@
           <Property Type="Decimal" Name="contact" Nullable="true" Precision="18" Scale="0" />
           <Property Type="String" Name="place" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="manage_order__Result">
-          <Property Type="Int32" Name="o_id" Nullable="false" />
-          <Property Type="Decimal" Name="u_id" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="p_id" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="p_name" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="qty" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="total" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="DateTime" Name="o_date" Nullable="true" />
-          <Property Type="Boolean" Name="isprocessed" Nullable="false" />
-          <Property Type="Decimal" Name="contact" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="place" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <EntityType Name="AdminMst">
-          <Key>
-            <PropertyRef Name="a_id" />
-          </Key>
-          <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isactive" Type="Boolean" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ShopingModelStoreContainer" CdmEntityContainer="ShopingEntities">
+        <EntityContainerMapping StorageEntityContainer="ShopingModelStoreContainer" CdmEntityContainer="ShopingEntities1">
+          <EntitySetMapping Name="AdminMsts">
+            <EntityTypeMapping TypeName="ShopingModel.AdminMst">
+              <MappingFragment StoreEntitySet="AdminMst">
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="contacts">
             <EntityTypeMapping TypeName="ShopingModel.contact">
               <MappingFragment StoreEntitySet="contact">
@@ -594,6 +605,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="insert_contact" FunctionName="ShopingModel.Store.insert_contact" />
+          <FunctionImportMapping FunctionImportName="insert_product" FunctionName="ShopingModel.Store.insert_product" />
           <FunctionImportMapping FunctionImportName="insertProduct_sp" FunctionName="ShopingModel.Store.insertProduct_sp" />
           <FunctionImportMapping FunctionImportName="itemselected_sp" FunctionName="ShopingModel.Store.itemselected_sp">
             <ResultMapping>
@@ -608,6 +620,24 @@
                 <ScalarProperty Name="isactive" ColumnName="isactive" />
                 <ScalarProperty Name="isdelete" ColumnName="isdelete" />
                 <ScalarProperty Name="isnew" ColumnName="isnew" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="manage_order_" FunctionName="ShopingModel.Store.manage_order_">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopingModel.manage_order__Result">
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="o_date" ColumnName="o_date" />
+                <ScalarProperty Name="isprocessed" ColumnName="isprocessed" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="place" ColumnName="place" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -647,40 +677,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="update_product" FunctionName="ShopingModel.Store.update_product" />
+          <FunctionImportMapping FunctionImportName="updateorder_sp" FunctionName="ShopingModel.Store.updateorder_sp" />
           <FunctionImportMapping FunctionImportName="updateQt" FunctionName="ShopingModel.Store.updateQt" />
           <FunctionImportMapping FunctionImportName="userlist" FunctionName="ShopingModel.Store.userlist" />
-          <FunctionImportMapping FunctionImportName="insert_product" FunctionName="ShopingModel.Store.insert_product" />
-          <FunctionImportMapping FunctionImportName="manage_order_" FunctionName="ShopingModel.Store.manage_order_">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ShopingModel.manage_order__Result">
-                <ScalarProperty Name="o_id" ColumnName="o_id" />
-                <ScalarProperty Name="u_id" ColumnName="u_id" />
-                <ScalarProperty Name="p_id" ColumnName="p_id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="p_name" ColumnName="p_name" />
-                <ScalarProperty Name="qty" ColumnName="qty" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="o_date" ColumnName="o_date" />
-                <ScalarProperty Name="isprocessed" ColumnName="isprocessed" />
-                <ScalarProperty Name="contact" ColumnName="contact" />
-                <ScalarProperty Name="place" ColumnName="place" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="updateorder_sp" FunctionName="ShopingModel.Store.updateorder_sp" />
-          <FunctionImportMapping FunctionImportName="update_product" FunctionName="ShopingModel.Store.update_product" />
-          <EntitySetMapping Name="AdminMsts">
-            <EntityTypeMapping TypeName="ShopingModel.AdminMst">
-              <MappingFragment StoreEntitySet="AdminMst">
-                <ScalarProperty Name="isactive" ColumnName="isactive" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="a_id" ColumnName="a_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

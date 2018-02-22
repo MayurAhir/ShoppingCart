@@ -13,7 +13,7 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
+                <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" MaxLength="50" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
                     CssClass="text-danger" ErrorMessage="The email field is required." />
             </div>
@@ -21,7 +21,7 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
+                <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" OnTextChanged="Password_TextChanged" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
                     CssClass="text-danger" ErrorMessage="The password field is required." />
             </div>
@@ -68,18 +68,18 @@
            <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Date Of Birth</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="dob" TextMode="Date" CssClass="form-control" />
+                <asp:TextBox runat="server" ID="dob" TextMode="Date" OnTextChanged="dob_TextChanged" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="dob"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The dat of birth field is required." />
+                <br />
+                <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Register" />
+                <br />
             </div>
            
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn btn-default" ID="rigstr1" />
-            </div>
-        </div>
+         
+      
     </div>
-    </div>
+    
 
 </asp:Content>

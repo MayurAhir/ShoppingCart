@@ -12,16 +12,26 @@ namespace WebApplication5
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShopingEntities db = new ShopingEntities();
+            ShopingEntities1 db = new ShopingEntities1();
             var it = db.discount_sp().ToList();
             Repeater1.DataSource = it;
             Repeater1.DataBind();
 
 
-            var ne = db.allproduct().ToList();
-             //var ne = db.newproduct_sp().ToList();
+           // var ne = db.allproduct().ToList();
+             var ne = db.newproduct_sp().ToList();
             Repeater2.DataSource = ne;
             Repeater2.DataBind();
+        }
+
+        protected void Repeater2_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+
+        }
+
+        protected void Repeater1_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+
         }
     }
 }
